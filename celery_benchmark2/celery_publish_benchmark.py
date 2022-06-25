@@ -15,13 +15,15 @@ from celery_benchmark.celery_consume_benchmark import task_fun, celery_app, Conf
 
 from readdata import read_data
 
-columns, data = read_data('/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv')
+columns, df = read_data('/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv')
+msg = []
+for index, row in df.iterrows():
+    dic = dict(row)
+    msg.append(dic)
 
-print('start......')
-
-for m in data:
-    # if i == 0:
-    #     print(time.strftime("%H:%M:%S"), '发布第一条')
-    # if i == 99999:
-    #     print(time.strftime("%H:%M:%S"), '发布第100000条')
-    task_fun.delay(m)
+for i in range(100000):
+    if i == 0:
+        print(time.strftime("%H:%M:%S"), '发布第一条')
+    if i == 99999:
+        print(time.strftime("%H:%M:%S"), '发布第100000条')
+    task_fun.delay(i)
