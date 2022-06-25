@@ -23,12 +23,27 @@ class Config:
 celery_app.config_from_object(Config)
 
 
+def rule(v):
+    r = [0.8, 0.2]
+    return v >= r[0] or v <= r[1]
+
+
 @celery_app.task(name='task_fun')
 def task_fun(x):
-    if x == 0:
+    """
+
+    每次判读5000个点
+
+    :param x:
+    :return:
+    """
+    i = x[0]
+    if i == 0:
         print(time.strftime("%H:%M:%S"), '消费第一条')
-    if x == 99999:
+    if i == 9999:
         print(time.strftime("%H:%M:%S"), '消费第10000条')
+    for k in x[1].keys():
+        rule(x[1][k])
 
 
 if __name__ == '__main__':

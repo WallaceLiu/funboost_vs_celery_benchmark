@@ -1,3 +1,7 @@
+"""
+
+
+"""
 import time
 # import redis
 from celery_benchmark.celery_consume_benchmark import task_fun, celery_app, Config
@@ -5,23 +9,9 @@ from celery_benchmark.celery_consume_benchmark import task_fun, celery_app, Conf
 # r = redis.from_url(Config.broker_url)
 # r.delete(Config.task_routes['task_fun']['queue'])
 
-# for i in range(100000):
-#     if i == 0:
-#         print(time.strftime("%H:%M:%S"), '发布第一条')
-#     if i == 99999:
-#         print(time.strftime("%H:%M:%S"), '发布第100000条')
-#     task_fun.delay(i)
-
-
-from readdata import read_data
-
-columns, data = read_data('/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv')
-
-print('start......')
-
-for m in data:
-    # if i == 0:
-    #     print(time.strftime("%H:%M:%S"), '发布第一条')
-    # if i == 99999:
-    #     print(time.strftime("%H:%M:%S"), '发布第100000条')
-    task_fun.delay(m)
+for i in range(100000):
+    if i == 0:
+        print(time.strftime("%H:%M:%S"), '发布第一条')
+    if i == 99999:
+        print(time.strftime("%H:%M:%S"), '发布第100000条')
+    task_fun.delay(i)
