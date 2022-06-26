@@ -1,7 +1,3 @@
-"""
-
-
-"""
 import time
 # import redis
 from celery_benchmark.celery_consume_benchmark import task_fun, celery_app, Config

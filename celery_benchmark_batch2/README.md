@@ -30,14 +30,14 @@ python celery_consume_benchmark.py
 
 -|线程|耗时(s)|每秒|备注
 ---|---|---|---|---
-生产消息|50|184|54条|gevent,concurrency=50,ack
-消费消息|50|-|282485点|gevent,concurrency=50,ack
-生产消息|100|131|76条|gevent,concurrency=100,ack
-消费消息|100|-|381679点|gevent,concurrency=100,ack
-生产消息|500|119|84条|gevent,concurrency=500,ack
-消费消息|500|-|420168点|gevent,concurrency=500,ack
-生产消息|1000|116|86条|gevent,concurrency=500,ack
-消费消息|1000|-|431034点|gevent,concurrency=500,ack
+生产消息|50|156|64条|gevent,concurrency=50,no ack,ignore result
+消费消息|50|-|320512点|gevent,concurrency=50,no ack,ignore result
+生产消息|100|-|-条|gevent,concurrency=100,no ack,ignore result
+消费消息|100|-|-点|gevent,concurrency=100,no ack,ignore result
+生产消息|500|-|-条|gevent,concurrency=500,no ack,ignore result
+消费消息|500|-|-点|gevent,concurrency=500,no ack,ignore result
+生产消息|1000|183|条|gevent,concurrency=500,no ack,ignore result
+消费消息|1000|-|-点|gevent,concurrency=500,no ack,ignore result
 
 
 

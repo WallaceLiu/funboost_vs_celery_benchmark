@@ -19,6 +19,7 @@ nohup celery -A celery_consume_benchmark worker --concurrency=50 -P gevent -l IN
 ```shell script
 python celery_consume_benchmark.py
 ```
+
 # 测试结果
 - MacBook Pro (15-inch, 2019)
 - 2.3 GHz 八核Intel Core i9
@@ -30,16 +31,11 @@ python celery_consume_benchmark.py
 
 -|线程|耗时(s)|每秒|备注
 ---|---|---|---|---
-生产消息|50|184|54条|gevent,concurrency=50,ack
-消费消息|50|-|282485点|gevent,concurrency=50,ack
-生产消息|100|131|76条|gevent,concurrency=100,ack
-消费消息|100|-|381679点|gevent,concurrency=100,ack
-生产消息|500|119|84条|gevent,concurrency=500,ack
-消费消息|500|-|420168点|gevent,concurrency=500,ack
-生产消息|1000|116|86条|gevent,concurrency=500,ack
-消费消息|1000|-|431034点|gevent,concurrency=500,ack
-
-
-
-
-[系统资源](../pictures/WX20220626-123839@2x.png)
+生产消息|50|165|-条|gevent,concurrency=50,ack
+消费消息|50|-|-点|gevent,concurrency=50,ack
+生产消息|100|-|-条|gevent,concurrency=100,ack
+消费消息|100|-|-点|gevent,concurrency=100,ack
+生产消息|500|-|-条|gevent,concurrency=500,ack
+消费消息|500|-|-点|gevent,concurrency=500,ack
+生产消息|1000|-|条|gevent,concurrency=500,ack
+消费消息|1000|-|-点|gevent,concurrency=500,ack

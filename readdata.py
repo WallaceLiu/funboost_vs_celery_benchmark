@@ -26,26 +26,26 @@ def read_data(file_path):
     df.drop(columns=['Unnamed: 0', 'Time'], axis=1, inplace=True)
     data = []
 
-    # df = df.iloc[0:10]
+    # df = df.iloc[0:20]
     for index, row in df.iterrows():
         dic = dict(row)
         data.append((index, dic))
     return columns, data
 
 
-def send_data(file_path):
-    return read_data(file_path)
-
-
+def partition_data(chunk_size, file_path):
+    columns, data = read_data(file_path)
+    return columns, partition_all(chunk_size, data)
 #
-# def partition_data(chunk, l):
-#     return partition_all(chunk, l.values.tolist())
-
+# #
+# c, data = partition_data(10, '/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv')
+# print(c)
+# d_l = list(data)
+# d_l_0 = d_l[0]
+# print('a')
+# for d in list(data):
+#     print(d)
 #
 # columns, data = read_data('/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv')
 # for d in data:
 #     print(d)
-#
-# start = pd.to_datetime('2022-6-25 18:56:00')
-# end = pd.to_datetime('2022-6-25 18:56:26')
-# print(end - start)

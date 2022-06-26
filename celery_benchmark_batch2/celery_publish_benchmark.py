@@ -1,5 +1,5 @@
 import time
-from celery_benchmark_batch.celery_consume_benchmark import task_fun, celery_app, Config
+from celery_benchmark_batch2.celery_consume_benchmark import task_fun, celery_app, Config
 
 from readdata import read_data
 

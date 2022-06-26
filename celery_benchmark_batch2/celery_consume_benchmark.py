@@ -13,6 +13,9 @@ class Config:
     task_routes = {
         'task_fun': {"queue": "celery_benchmark", },
     }
+    task_ignore_result = True
+    worker_disable_rate_limits = True
+    task_acks_late = True
 
 
 celery_app.config_from_object(Config)
