@@ -13,13 +13,13 @@ from celery_benchmark.celery_consume_benchmark import task_fun, celery_app, Conf
 #     task_fun.delay(i)
 
 
-from readdata import read_data
+from readdata import expand_not
 
-columns, df = read_data('/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv')
-msg = []
-for index, row in df.iterrows():
-    dic = dict(row)
-    msg.append(dic)
+columns, df = expand_not('/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv')
+# msg = []
+# for index, row in df.iterrows():
+#     dic = dict(row)
+#     msg.append(dic)
 
 for i in range(100000):
     if i == 0:
