@@ -23,10 +23,10 @@ python celery_consume_benchmark.py
 # 模型
 模型|说明
 ---|---
-LSTM|-
-CNN|-
 RandomForest|-
 IsolationForest|-
+LSTM|-
+CNN|-
 
 
 # 测试结果
