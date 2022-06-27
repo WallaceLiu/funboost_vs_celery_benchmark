@@ -12,7 +12,7 @@ celery -A celery_consume_benchmark worker --concurrency=50 -P gevent -l INFO -Q 
 ```
 或
 ```shell script
-nohup celery -A celery_consume_benchmark worker --concurrency=50 -P gevent -l INFO -Q celery_benchmark > celery_benchmark_log.log 2>&1 &
+nohup celery -A celery_consume_benchmark worker --concurrency=50 -P gevent -l INFO -Q celery_benchmark --without-heartbeat > celery_benchmark_log.log 2>&1 &
 ```
 
 2）在另一个终端执行生产者 celery_publish_benchmark，命令如下
@@ -25,6 +25,9 @@ python celery_consume_benchmark.py
 ---|---
 LSTM|-
 CNN|-
+RandomForest|-
+IsolationForest|-
+
 
 # 测试结果
 - MacBook Pro (15-inch, 2019)
