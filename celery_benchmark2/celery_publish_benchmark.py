@@ -13,7 +13,7 @@ from celery_benchmark.celery_consume_benchmark import task_fun, celery_app, Conf
 #     task_fun.delay(i)
 
 
-from readdata import expand_not
+from read_data import expand_not
 
 columns, df = expand_not('/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv')
 # msg = []

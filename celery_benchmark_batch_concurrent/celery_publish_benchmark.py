@@ -3,7 +3,7 @@ from celery_benchmark_batch_concurrent.celery_consume_benchmark import task_fun,
 from concurrent.futures import ThreadPoolExecutor, wait, as_completed
 # r = redis.from_url(Config.broker_url)
 # r.delete(Config.task_routes['task_fun']['queue'])
-from readdata import partition_data
+from read_data import partition_data
 
 file_path = '/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv'
 thread_pool = 10

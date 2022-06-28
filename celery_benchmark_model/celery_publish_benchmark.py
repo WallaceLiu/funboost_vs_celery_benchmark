@@ -1,7 +1,7 @@
 import time
 from celery_benchmark_batch2.celery_consume_benchmark import task_fun, celery_app, Config
 
-from readdata import expand_not
+from read_data import expand_not
 
 columns, data = expand_not('/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv')
 

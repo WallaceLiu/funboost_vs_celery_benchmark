@@ -1,5 +1,6 @@
-from utils import *
 import unittest
+from utils import *
+from read_data import fake_model_data
 
 
 class utilsTest(unittest.TestCase):
@@ -15,13 +16,13 @@ class utilsTest(unittest.TestCase):
     @unittest.skip
     def test_model_IsolationForest(self):
         u_model = model_load(self.isolation_forest_model_path)
-        data = create_data()
+        data = fake_model_data()
         model, data, y_predict = modelML_use(u_model, data)
         print(y_predict)
 
     def test_model_RandomForest(self):
         u_model = model_load(self.random_forest_model_path)
-        data = create_data()
+        data = fake_model_data()
         model, data, y_predict = modelML_use(u_model, data)
         print(y_predict)
 
