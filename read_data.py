@@ -5,17 +5,16 @@ import json
 
 rows = 10000
 columns = 5000
-rows_columns_2 = int(rows * columns / 2)
+rows_columns_2 = int(rows * columns / 2 / 100)
 
 
-def read_data(file_path):
+def read_telemetry_params(file_path='/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv'):
     """
     10000*5000
-    :param file_path: /Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv
+    :param file_path:
     :return:
     """
-    df = pd.read_csv(file_path,
-                     encoding="ISO-8859-1")
+    df = pd.read_csv(file_path, encoding="ISO-8859-1")
 
     df['Time'] = pd.to_datetime(df['Time'])
     columns = [col for col in df.columns if 'Unnamed' not in col]
@@ -23,18 +22,26 @@ def read_data(file_path):
     return columns, df
 
 
+def read_telemetry_params_for_model(file_path='/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake-model-data.csv'):
+    df = pd.read_csv(file_path, encoding="ISO-8859-1", index_col=False)
+    columns = [col for col in df.columns if 'Unnamed' not in col]
+    # df.drop(columns=['Unnamed: 0'], axis=1, inplace=True)
+    # df = df.iloc[0:20]
+    return columns, df.values.tolist()
+
+
 def expand_not(file_path):
-    cols, df = read_data(file_path)
+    cols, df = read_telemetry_params(file_path)
     data = []
     # df = df.iloc[0:20]
     for index, row in df.iterrows():
         dic = dict(row)
         data.append((index, dic))
-    return read_data(file_path)
+    return read_telemetry_params(file_path)
 
 
 def expand(file_path):
-    cols, df = read_data(file_path)
+    cols, df = read_telemetry_params(file_path)
     data = []
     # df = df.iloc[0:20]
     for index, row in df.iterrows():
@@ -81,8 +88,6 @@ def fake_model_data():
     for i in range(0, rows_columns_2):
         df_list.append(df.copy())
     result = pd.concat(df_list)
-    result.to_csv('/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake-model-data.csv')
+    print('')
+    result.to_csv('/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake-model-data.csv', index=0)
     return result
-
-
-fake_model_data()

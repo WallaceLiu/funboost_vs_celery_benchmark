@@ -1,12 +1,64 @@
-import pandas as pd
-import numpy as np
-from toolz import partition_all
-import os
 import pickle
 import numpy as np
 import pandas as pd
 from tensorflow.keras.models import load_model
-import json
+import datetime
+import logging
+
+
+
+# ----------------------------------------------------------------------------------------------------
+#
+# 功能性函数
+#
+# ----------------------------------------------------------------------------------------------------
+
+
+def get_second_from(start, end):
+    """
+
+    :param start:  2022-6-25 13:41:11
+    :param end:  2022-6-25 13:42:06
+    :return:
+    """
+    start = pd.to_datetime(start)
+    end = pd.to_datetime(end)
+    r = end - start
+    return r.seconds
+
+
+# ----------------------------------------------------------------------------------------------------
+#
+# 功能性注解
+#
+# ----------------------------------------------------------------------------------------------------
+
+def elapsed_time(func):
+    """
+    elapsed time of function
+    :param func:
+    :return:
+    """
+
+    def wrapper(*args, **kw):
+        start_time = datetime.datetime.now()
+        res = func(*args, **kw)
+        over_time = datetime.datetime.now()
+        etime = (over_time - start_time).total_seconds()
+        logging.info('Elapsed time: current function <{0}> is {1} s'.format(func.__name__, etime))
+        return res
+
+    return wrapper
+
+
+def singleton(clsObject):
+    def inner(*args, **kwargs):
+        if not hasattr(clsObject, "ins"):
+            insObject = clsObject(*args, **kwargs)
+            setattr(clsObject, "ins", insObject)
+        return getattr(clsObject, "ins")
+
+    return inner
 
 
 # ----------------------------------------------------------------------------------------------------
@@ -16,6 +68,17 @@ import json
 # 2、模型输出
 # 3、模型利用（分为机器学习ML和深度学习DL）
 # ----------------------------------------------------------------------------------------------------
+
+
+
+random_forest_model_path = '/Users/cap/project/funboost_vs_celery_benchmark/87dc85bb-f1d4-11ec-baf4-9c7bef2d2962.pickle'
+isolation_forest_model_path = '/Users/cap/project/funboost_vs_celery_benchmark/d1a2cc7a-c3bf-11ec-b8a6-67f88aaa7c62.pickle'
+
+models = {
+    'random_forest': random_forest_model_path,
+    'isolation_forest': isolation_forest_model_path,
+}
+
 
 def model_load(path):
     """1、模型读取
@@ -128,24 +191,14 @@ def modelDL_use(model, data, model_typer="lstm", typer="sequential_predict", var
         pass
 
 
-# ----------------------------------------------------------------------------------------------------
-#
-# 功能性函数
-#
-# ----------------------------------------------------------------------------------------------------
+@singleton
+class ModelFactory(object):
 
+    def __init__(self):
+        self.model_load = {}
+        for model_type in models.keys():
+            self.model_load[model_type] = model_load(models[model_type])
 
-def get_second_from(start, end):
-    """
-
-    :param start:  2022-6-25 13:41:11
-    :param end:  2022-6-25 13:42:06
-    :return:
-    """
-    start = pd.to_datetime(start)
-    end = pd.to_datetime(end)
-    r = end - start
-    return r.seconds
-
-
-print(create_data())
+    def predict(self, model_type, data):
+        model, data, y_predict = modelML_use(self.model_load[model_type], data)
+        return y_predict

@@ -1,6 +1,7 @@
 import time
 import celery
 from celery import platforms
+from utils import *
 
 platforms.C_FORCE_ROOT = True
 # celery_app = celery.Celery('test_frame.test_celery.test_celery_app')
@@ -16,36 +17,22 @@ class Config:
     task_ignore_result = True
     worker_disable_rate_limits = True
     task_acks_late = True
+    worker_prefetch_multiplier = 4
+    worker_cancel_long_running_tasks_on_connection_loss = True
+    broker_heartbeat = 0
+    broker_pool_limit = None
+    broker_connection_timeout = 20
+    broker_connection_retry = True
+    broker_connection_max_retries = 3
+    result_expires = 3600
 
 
 celery_app.config_from_object(Config)
 
-
-def rule(v):
-    r = [0.8, 0.2]
-    return v >= r[0] or v <= r[1]
+mf = ModelFactory()
 
 
 @celery_app.task(name='task_fun')
-def task_fun(x):
-    """
-
-    每次判读5000个点
-
-    :param x:
-    :return:
-    """
-    i = x[0]
-    if i == 0:
-        print(time.strftime("%H:%M:%S"), '消费第一条')
-    if i == 9999:
-        print(time.strftime("%H:%M:%S"), '消费第10000条')
-    for k in x[1].keys():
-        rule(x[1][k])
-
-
-if __name__ == '__main__':
-    # 不需要使用命令行，直接启动此脚本。
-    celery_app.worker_main(
-        argv=['worker', '--pool=gevent', '--concurrency=50', '-n', 'worker1@%h', '--loglevel=DEBUG',
-              '--queues=celery_benchmark'])
+def task_fun(x, columns, model_type):
+    df = pd.DataFrame(data=x, columns=columns)
+    mf.predict(model_type, df)
