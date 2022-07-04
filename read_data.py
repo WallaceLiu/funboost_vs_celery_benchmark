@@ -7,7 +7,6 @@ rows = 10000
 columns = 5000
 rows_columns_2 = int(rows * columns / 2 / 100)
 
-
 def read_telemetry_params(file_path='/Users/cap/Documents/3.项目/二室/样例数据/遥测数据1-fake.csv'):
     """
     10000*5000
